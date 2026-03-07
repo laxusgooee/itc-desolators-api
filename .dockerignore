@@ -9,10 +9,8 @@ env/
 .git/
 .gitignore
 .dockerignore
-/root/Projects/itc/week_05_ass/api/.python-version
-/root/Projects/itc/week_05_ass/api/.python-version
-/root/Projects/itc/week_05_ass/api/uv.lock
-/root/Projects/itc/week_05_ass/api/pyproject.toml
+.python-version
+.python-version
 .pytest_cache/
 .coverage
 htmlcov/
