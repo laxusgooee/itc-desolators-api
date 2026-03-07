@@ -1,19 +1,20 @@
 """
 Classification service — loads the trained Keras model and LabelEncoder
-from pickle files and exposes a predict() method.
+from pickle files and exposes a predict() and metrics() method.
 """
 
+import json
 import os
 import pickle
 import tempfile
-
+from typing import Sequence, Tuple
 import numpy as np
 import tensorflow as tf
-
 from app.core.config import settings
 
-MODEL_PKL = os.path.abspath(os.path.join(settings.BASE_PATH, "api", "app", "models", "plant_model.pkl"))
+MODEL_PKL   = os.path.abspath(os.path.join(settings.BASE_PATH, "api", "app", "models", "plant_model.pkl"))
 ENCODER_PKL = os.path.abspath(os.path.join(settings.BASE_PATH, "api", "app", "models", "plant_encoder.pkl"))
+METRICS_JSON = os.path.abspath(os.path.join(settings.BASE_PATH, "api", "app", "models", "plant_metrics.json"))
 
 IMG_SIZE = 128
 
@@ -61,7 +62,7 @@ class ClassificationService:
         dict with keys:
             class_name  : str   – predicted species label
             confidence  : float – softmax probability of the top class
-            result      : list  – all classes ranked by confidence
+            predictions : list  – all classes ranked by confidence
         """
         cls._load()
 
@@ -77,7 +78,38 @@ class ClassificationService:
         )
 
         return {
-            "class_name": ranked[0]["class_name"],
-            "confidence": ranked[0]["confidence"],
-            "result":     ranked,
+            "class_name":  ranked[0]["class_name"],
+            "confidence":  ranked[0]["confidence"],
+            "predictions": ranked,
         }
+
+    @classmethod
+    def classes(cls) -> list[str]:
+        """Return the list of class names known by the encoder."""
+        cls._load()
+        return cls._encoder.classes_.tolist()
+
+    @classmethod
+    def metrics(
+        cls
+    ) -> dict:
+        """
+        Get model metrics
+
+
+        Returns
+        -------
+        dict with keys:
+            accuracy          : float
+            classification_report : dict  (per-class precision/recall/f1 + averages)
+        """
+        if not os.path.exists(METRICS_JSON):
+            raise FileNotFoundError(
+                f"Metrics file not found at {METRICS_JSON}. "
+                "Run models/classification/train.py first."
+            )
+
+        with open(METRICS_JSON, "r") as f:
+            data = json.load(f)
+
+        return data
