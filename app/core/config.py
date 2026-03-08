@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     # path
     BASE_PATH: str = os.path.join(
         os.path.dirname(__file__),            # api/app/core/
-        "..", "..", "..",
+        "..", "..",
     )
 
     # Application

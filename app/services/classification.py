@@ -12,9 +12,12 @@ import numpy as np
 import tensorflow as tf
 from app.core.config import settings
 
-MODEL_PKL   = os.path.abspath(os.path.join(settings.BASE_PATH, "api", "app", "models", "plant_model.pkl"))
-ENCODER_PKL = os.path.abspath(os.path.join(settings.BASE_PATH, "api", "app", "models", "plant_encoder.pkl"))
-METRICS_JSON = os.path.abspath(os.path.join(settings.BASE_PATH, "api", "app", "models", "plant_metrics.json"))
+
+MODEL_PATH = os.path.join(settings.BASE_PATH, "models")
+
+MODEL_PKL   = os.path.abspath(os.path.join(MODEL_PATH, "plant_model.pkl"))
+ENCODER_PKL = os.path.abspath(os.path.join(MODEL_PATH, "plant_encoder.pkl"))
+METRICS_JSON = os.path.abspath(os.path.join(MODEL_PATH, "plant_metrics.json"))
 
 IMG_SIZE = 128
 
