@@ -4,7 +4,7 @@ from app.core.config import settings
 
 router = APIRouter()
 
-@router.get("/", response_model=HealthCheckResponse)
+@router.get("", response_model=HealthCheckResponse)
 def health_check():
     """Simple health check endpoint."""
     return {
