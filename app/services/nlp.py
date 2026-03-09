@@ -14,8 +14,6 @@ NER_JSONL = os.path.join(MODEL_PATH, "ner_annotations.jsonl")
 METRICS_JSON = os.path.join(MODEL_PATH, "nlp_metrics.json")
 RESULTS_JSON = os.path.join(MODEL_PATH, "nlp_results.json")
 
-
-
 LABEL_RULES: List[tuple[str, List[str]]] = [
     ("Account", [
         r"log into my account",
