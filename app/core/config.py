@@ -18,9 +18,13 @@ class Settings(BaseSettings):
     APP_NAME: str = "FastAPI App"
     APP_VERSION: str = "0.1.0"
     DEBUG: bool = False
+    API_V1_PREFIX: str = "/api/v1"
 
     # CORS
     ALLOWED_ORIGINS: list[str] = ["*"]
+
+    # Anthropic
+    ANTHROPIC_API_KEY: str = ""
 
 
 settings = Settings()
